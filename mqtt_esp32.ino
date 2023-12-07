@@ -1,5 +1,9 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
+#include <ESP32Servo.h>
+
+Servo servo_pin_22;
+boolean servoRotationRequested = false;
 
 #define RXp2 16
 #define TXp2 17
@@ -16,7 +20,6 @@ const char *sub_topic = "stonez56/esp32s";
 const char *pub_init_topic = "stonez56/esp32s_is_back";
 const char *pub_pH_topic = "stonez56/pH";        // pH value topic
 const char *pub_temp_topic = "stonez56/temp"; // Water temperature topic
-const char *pub_water_level_topic = "stonez56/water"; // Water level topic
 
 // EMQX broker parameters
 const char *mqtt_server = "broker.emqx.io";
@@ -32,7 +35,6 @@ int value = 0;
 
 String phValue;     // 用於存儲 pH 值的變量
 String tempValue;   // 用於存儲水溫數據的變量
-String waterLevel;
 
 void setup_wifi()
 {
@@ -58,13 +60,39 @@ void setup_wifi()
     Serial.println(WiFi.localIP());
 }
 
-void callback(char *topic, byte *payload, unsigned int length)
-{
+void startMotor() {
+    if (!servoRotationRequested) {
+        servo_pin_22.attach(22); // 重新連接伺服馬達
+        servoRotationRequested = true;
+        servo_pin_22.write(90); // 式旋轉伺服馬達到 90 度位置
+        delay(3000); // 等待3秒
+        servo_pin_22.write(0); // 返回到0度
+        servoRotationRequested = false;
+        Serial.println("Feed: on");
+    }
+}
+
+void manualControl() {
+    if (Serial.available()) {
+        String command = Serial.readStringUntil('\n');
+        command.trim();
+
+        if (command == "r") {
+            startMotor();
+            delay(3000);  // 等待3秒，然後停止伺服馬達
+            servo_pin_22.detach(); // 斷開伺服馬達的控制
+
+            client.publish(sub_topic, "r");  // 在按下按鈕 "r" 時發佈到 "stonez56/esp32s" MQTT主題
+
+        }
+    }
+}
+
+void callback(char *topic, byte *payload, unsigned int length) {
     Serial.print("Message arrived [");
     Serial.print(topic);
     Serial.print("] ");
-    for (int i = 0; i < length; i++)
-    {
+    for (int i = 0; i < length; i++) {
         Serial.print((char)payload[i]);
     }
     Serial.println();
@@ -72,7 +100,13 @@ void callback(char *topic, byte *payload, unsigned int length)
     payload[length] = '\0';
     String message = (char *)payload;
 
-    // Handle received MQTT messages here
+    if (strcmp(topic, sub_topic) == 0){
+        if (message == "r"){
+            startMotor();  // 啟動馬達的函數
+            delay(3000);   // 等待3秒，然後停止伺服馬達
+            servo_pin_22.detach(); // 斷開伺服馬達的控制
+        }
+    }
 }
 
 void reconnect()
@@ -80,13 +114,14 @@ void reconnect()
     while (!client.connected())
     {
         Serial.println("Attempting EMQX MQTT connection...");
-        mqtt_ClientID += String(random(0xffff), HEX); // 此處不再需要轉換
+        mqtt_ClientID += String(ESP.getEfuseMac(), HEX); 
 
         if (client.connect(mqtt_ClientID.c_str(), mqtt_userName, mqtt_password))
         {
             Serial.print("Connected with Client ID: ");
             Serial.println(mqtt_ClientID);
-            // 在這裡添加訂閱主題的程式碼
+            client.subscribe(sub_topic);  
+            
         }
         else
         {
@@ -106,13 +141,15 @@ void setup() {
     client.setServer(mqtt_server, 1883);
     client.setCallback(callback);
 
-    // 在這裡聲明變數，不要加String
     phValue = "";     // 用於存儲 pH 值的變量
     tempValue = "";   // 用於存儲水溫數據的變量
-    waterLevel = "";
+
+    //servo_pin_22.attach(22);
 }
 
 void loop() {
+    manualControl(); // 增加手動控制功能
+
     if (Serial2.available()) {
         String receivedData = Serial2.readString();
         
@@ -130,10 +167,6 @@ void loop() {
             tempValue.trim();
             Serial.print(tempValue);
 
-            // 提取水位數據
-            //waterLevel = receivedData.substring(waterLevelIndex + 4);
-            //waterLevel.trim();
-
             // 在這裡處理pH值、水溫和水位數據
             // 例如，將它們發佈到MQTT主題中
 
@@ -147,10 +180,8 @@ void loop() {
                 lastMsg = now;
                 // 將pH值、水溫和水位發佈到MQTT主題
                 client.publish(pub_pH_topic, phValue.c_str());             // 發佈pH值主題
-                client.publish(pub_temp_topic, tempValue.c_str());         // 發佈水溫主題
-                //client.publish(pub_water_level_topic, waterLevel.c_str()); // 發佈水位主題
+                client.publish(pub_temp_topic, tempValue.c_str());         // 發佈水溫主題 
             }
         }
     }
-    delay(3000);
 }
