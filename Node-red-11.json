@@ -1,0 +1,1289 @@
+[
+    {
+        "id": "113458a4ccbe69b6",
+        "type": "tab",
+        "label": "流程11",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "84d4b459c20099fc",
+        "type": "group",
+        "z": "113458a4ccbe69b6",
+        "name": "css插入",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "e4b598dfba039071",
+            "ebc4bf1a6fa053a1",
+            "b0e56674422f4b9e"
+        ],
+        "x": 874,
+        "y": 59,
+        "w": 472,
+        "h": 82
+    },
+    {
+        "id": "4f584a32b08cccf9",
+        "type": "group",
+        "z": "113458a4ccbe69b6",
+        "name": "將數據上傳至mysql",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "25d6c19fc770f7bf",
+            "e7bce9bac11198c8",
+            "2741eab041590308"
+        ],
+        "x": 234,
+        "y": 1259,
+        "w": 612,
+        "h": 82
+    },
+    {
+        "id": "7264f32fef0b0aab",
+        "type": "group",
+        "z": "113458a4ccbe69b6",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "6491f3c07381b94d",
+            "2e76ad57df351368",
+            "3cb921fb1c709944",
+            "93a897ca3e26dfa5",
+            "5deb96332bc8d393",
+            "b992119a5b301a07",
+            "5416850f7de9e953",
+            "fa258112fbabdbeb",
+            "bf6c39f3847f95a2",
+            "cc3388b0c0a0399e",
+            "5b33664706ba0eca",
+            "17c5b46d37b87ffb",
+            "46ee6d1c5cf16317",
+            "235d2fb8e31e4f2a",
+            "9dc2d74f3b4d589d",
+            "8087b436223f36d4",
+            "b47af69ddc10838f",
+            "4e17b5546c03c11e"
+        ],
+        "x": 154,
+        "y": 699,
+        "w": 932,
+        "h": 522
+    },
+    {
+        "id": "6f4230a8f79445f1",
+        "type": "group",
+        "z": "113458a4ccbe69b6",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "69863adef137c586",
+            "c78e0e79c314f026",
+            "10e9b2eb39128c5b",
+            "91b22aab4907e14e",
+            "a8c03416566078cb",
+            "e3a8477dde1dc032",
+            "6687ce6a480d4b3c"
+        ],
+        "x": 1134,
+        "y": 699,
+        "w": 1032,
+        "h": 202
+    },
+    {
+        "id": "d2319c43a6d39156",
+        "type": "http request",
+        "z": "113458a4ccbe69b6",
+        "name": "Messaging API 傳送",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.line.me/v2/bot/message/push",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 740,
+        "y": 180,
+        "wires": [
+            [
+                "c291948566fe214a"
+            ]
+        ]
+    },
+    {
+        "id": "9863eacb3e7ed748",
+        "type": "inject",
+        "z": "113458a4ccbe69b6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 12 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 318,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e4b598dfba039071",
+        "type": "template",
+        "z": "113458a4ccbe69b6",
+        "g": "84d4b459c20099fc",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<html>\n    <style>\n        body {\n            background-color: #f2f2f2;\n            font-family: Arial, sans-serif;\n        }\n\n        .custom-container {\n            padding: 20px;\n            border: 2px solid #ccc;\n            background-color: blue;\n            color: white;\n        }\n    </style>\n    <body>\n        <div class=\"custom-container\">\n            <h1>智慧生態缸</h1>\n        </div>\n        <div class=\"hyperlink\">\n            <a href=\"https://www.google.com/\">目前水質</a>\n            <a href=\"\"\n    </body>\n</html>",
+        "output": "str",
+        "x": 1150,
+        "y": 100,
+        "wires": [
+            [
+                "b0e56674422f4b9e"
+            ]
+        ]
+    },
+    {
+        "id": "ebc4bf1a6fa053a1",
+        "type": "http in",
+        "z": "113458a4ccbe69b6",
+        "g": "84d4b459c20099fc",
+        "name": "",
+        "url": "/fish_tank",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 980,
+        "y": 100,
+        "wires": [
+            [
+                "e4b598dfba039071"
+            ]
+        ]
+    },
+    {
+        "id": "b0e56674422f4b9e",
+        "type": "http response",
+        "z": "113458a4ccbe69b6",
+        "g": "84d4b459c20099fc",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1270,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "25d6c19fc770f7bf",
+        "type": "mysql",
+        "z": "113458a4ccbe69b6",
+        "g": "4f584a32b08cccf9",
+        "mydb": "7aa96d8459aa1c49",
+        "name": "",
+        "x": 770,
+        "y": 1300,
+        "wires": [
+            [
+                "76c2ce1aa5921ae3"
+            ]
+        ]
+    },
+    {
+        "id": "e7bce9bac11198c8",
+        "type": "function",
+        "z": "113458a4ccbe69b6",
+        "g": "4f584a32b08cccf9",
+        "name": "impoet to sql",
+        "func": "var PH_value = global.get(\"pH_value\");\nvar Temp_value = global.get(\"temp_value\");\n\n\n\nmsg.topic = \"INSERT INTO fishtank(ph, temp) VALUES('\" + PH_value + \"','\" + Temp_value + \"')\";\nreturn msg; \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 1300,
+        "wires": [
+            [
+                "25d6c19fc770f7bf"
+            ]
+        ]
+    },
+    {
+        "id": "2741eab041590308",
+        "type": "inject",
+        "z": "113458a4ccbe69b6",
+        "g": "4f584a32b08cccf9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 1300,
+        "wires": [
+            [
+                "e7bce9bac11198c8"
+            ]
+        ]
+    },
+    {
+        "id": "ad3c069a2c9f726c",
+        "type": "function",
+        "z": "113458a4ccbe69b6",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'xB6d8P9HrHWfdzEf/jDBDlJz7crypRGE4aKi8j5C+bMrmNaGtfjzVQv+oglSyMW8vlD4O7DiVFF4XB5Mpz5EgoIyuYjCKYEikQ+k8kdKkdFWq+4rx1nwTda0vAv1ybEYzlPwHm1Sv22rsNkwgpWHXAdB04t89/1O/w1cDnyilFU=';\nvar USER_ID = 'Uee1b61f84d0edff98093a380d3437c8b';\nvar USER_ID_2 = 'U1c9f961591b68aa4b8cbf178a7651b36';\nvar USER_ID_3 = 'Ua758b97f4ac9475ffef57b0ab5f8c3f1';\n\n\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUsers = [USER_ID, USER_ID_2, USER_ID_3];\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\nmessages.push({ type: 'text', text: \"目前pH值為\" + PH_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUsers[2], // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 518,
+        "y": 180,
+        "wires": [
+            [
+                "d2319c43a6d39156"
+            ]
+        ]
+    },
+    {
+        "id": "e104906d95a815af",
+        "type": "debug",
+        "z": "113458a4ccbe69b6",
+        "name": "智慧生態缸   接收訊息",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "47d8c930fef93cf9",
+        "type": "http in",
+        "z": "113458a4ccbe69b6",
+        "name": "智慧生態缸  接收訊息",
+        "url": "linehook",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 310,
+        "y": 320,
+        "wires": [
+            [
+                "c41201074c1b9994",
+                "e104906d95a815af"
+            ]
+        ]
+    },
+    {
+        "id": "f46346fd082718f0",
+        "type": "http request",
+        "z": "113458a4ccbe69b6",
+        "name": "智慧生態缸   回復訊息",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.line.me/v2/bot/message/push",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 640,
+        "y": 460,
+        "wires": [
+            [
+                "82c5d5448b33d267"
+            ]
+        ]
+    },
+    {
+        "id": "82c5d5448b33d267",
+        "type": "debug",
+        "z": "113458a4ccbe69b6",
+        "name": "智慧生態缸 回復訊息",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c41201074c1b9994",
+        "type": "function",
+        "z": "113458a4ccbe69b6",
+        "name": "多人訊息傳送",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'xB6d8P9HrHWfdzEf/jDBDlJz7crypRGE4aKi8j5C+bMrmNaGtfjzVQv+oglSyMW8vlD4O7DiVFF4XB5Mpz5EgoIyuYjCKYEikQ+k8kdKkdFWq+4rx1nwTda0vAv1ybEYzlPwHm1Sv22rsNkwgpWHXAdB04t89/1O/w1cDnyilFU=';\nvar USER_ID = 'Uee1b61f84d0edff98093a380d3437c8b';\nvar USER_ID_2 = 'U1c9f961591b68aa4b8cbf178a7651b36';\nvar USER_ID_3 = 'Ua758b97f4ac9475ffef57b0ab5f8c3f1';\nvar receive_msg = msg.payload;\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUser = receive_msg.events[0].source.userId;\nvar messages = [];\n\nif (targetUser === USER_ID) {\n    // 處理USER_ID的消息\n    if (receive_msg.events[0].message.type == \"text\") {\n        if (receive_msg.events[0].message.text == \"魚缸溫度\") {\n            messages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\n        } else if (receive_msg.events[0].message.text == \"PH值\") {\n            messages.push({ type: 'text', text: \"目前pH值為\" + PH_value });\n        } else {\n            messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」「pH值」\" });\n        }\n    } else if (receive_msg.events[0].message.type == \"sticker\") {\n        messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」「pH值」\" });\n    }\n}\n\nif (targetUser === USER_ID_2) {\n    if (receive_msg.events[0].message.type == \"text\") {\n        if (receive_msg.events[0].message.text == \"魚缸溫度\") {\n            messages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\n        } else if (receive_msg.events[0].message.text == \"PH值\") {\n            messages.push({ type: 'text', text: \"目前pH值為\" + PH_value });\n        } else {\n            messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」「pH值」\" });\n        }\n    } else if (receive_msg.events[0].message.type == \"sticker\") {\n        messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」「pH值」\" });\n    }\n}\n\nif (targetUser === USER_ID_3) {\n    if (receive_msg.events[0].message.type == \"text\") {\n        if (receive_msg.events[0].message.text == \"魚缸溫度\") {\n            messages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\n        } else if (receive_msg.events[0].message.text == \"PH值\") {\n            messages.push({ type: 'text', text: \"目前pH值為\" + PH_value });\n        } else {\n            messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」「pH值」\" });\n        }\n    } else if (receive_msg.events[0].message.type == \"sticker\") {\n        messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」「pH值」\" });\n    }\n}\n\n// 发送消息给目标用户\nvar payload = {\n    to: targetUser,\n    messages: messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 380,
+        "wires": [
+            [
+                "f46346fd082718f0"
+            ]
+        ]
+    },
+    {
+        "id": "76c2ce1aa5921ae3",
+        "type": "debug",
+        "z": "113458a4ccbe69b6",
+        "name": "debug 57",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "6491f3c07381b94d",
+        "type": "mqtt in",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "",
+        "topic": "stonez56/temp",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "89975cb5ce9f40f8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 880,
+        "wires": [
+            [
+                "93a897ca3e26dfa5",
+                "fa258112fbabdbeb",
+                "b992119a5b301a07"
+            ]
+        ]
+    },
+    {
+        "id": "2e76ad57df351368",
+        "type": "mqtt in",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "",
+        "topic": "stonez56/pH",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "89975cb5ce9f40f8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 800,
+        "wires": [
+            [
+                "3cb921fb1c709944",
+                "5416850f7de9e953",
+                "5deb96332bc8d393"
+            ]
+        ]
+    },
+    {
+        "id": "3cb921fb1c709944",
+        "type": "function",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "function 16",
+        "func": "global.set(\"pH_value\", msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "93a897ca3e26dfa5",
+        "type": "function",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "function 17",
+        "func": "global.set(\"temp_value\", msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5deb96332bc8d393",
+        "type": "ui_gauge",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "PH值",
+        "group": "98841551674525d1",
+        "order": 2,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "PH值",
+        "label": "",
+        "format": "{{value}}",
+        "min": "1",
+        "max": "13",
+        "colors": [
+            "#f0dc00",
+            "#28f0ed",
+            "#24eb0a"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 630,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "b992119a5b301a07",
+        "type": "ui_gauge",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "水溫",
+        "group": "98841551674525d1",
+        "order": 3,
+        "width": 6,
+        "height": 5,
+        "gtype": "wave",
+        "title": "水溫",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 630,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "5416850f7de9e953",
+        "type": "ui_chart",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "",
+        "group": "9c3efec766d2eabf",
+        "order": 1,
+        "width": 9,
+        "height": 5,
+        "label": "PH值紀錄",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "bezier",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#5a93dd",
+            "#ff7f0e",
+            "#60c760",
+            "#98ee87",
+            "#d62728",
+            "#f2c1c0",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 640,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fa258112fbabdbeb",
+        "type": "ui_chart",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "",
+        "group": "9c3efec766d2eabf",
+        "order": 2,
+        "width": 9,
+        "height": 5,
+        "label": "水溫紀錄",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#0964a5",
+            "#5a93dd",
+            "#ff7f0e",
+            "#60c760",
+            "#98df8a",
+            "#d62728",
+            "#f2c1c0",
+            "#9467bd",
+            "#9833e6"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 620,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bf6c39f3847f95a2",
+        "type": "ui_template",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "group": "0524f72773cfa0a4",
+        "name": "Clock Toolbar",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<script id=\"titleScript\" type=\"text/javascript\">\n\n$(function() {\n    if($('.md-toolbar-tools').length != 0){\n        loadClock();\n    }else setTimeout(loadClock, 500)\n});\n\nfunction loadClock(){\n    $('#clock').remove();\n    var toolbar = $('.md-toolbar-tools');\n    \n    var div = $('<div/>');\n    var p = $('<p/ id=\"clock\">');\n    \n    div.append(p);\n    div[0].style.margin = '5px 5px 5px auto';\n    toolbar.append(div);\n\n    function displayTitle(lh) {\n        p.text(lh); \n    }\n    \n    function upTime() {\n        var d = new Date();\n        p.text(d.toLocaleString());\n    }\n\n    if(document.clockInterval){ \n            clearInterval(document.clockInterval);\n            document.clockInterval = null;\n    }\n        \n    document.clockInterval = setInterval(upTime,1000);\n}\n\n</script>\n\n",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "global",
+        "className": "",
+        "x": 380,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cc3388b0c0a0399e",
+        "type": "ui_template",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "group": "98841551674525d1",
+        "name": "CSS修改DASHBOARD",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n    /* 主背景*/\n    body {\n        background-image: url(https://res.klook.com/image/upload/u_activities:jigirbcigdcjtqc6an8p,h_1.0,ar_960:460,c_scale,e_blur:10000/c_fill,w_1265,h_712/q_80/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/jigirbcigdcjtqc6an8p.webp);\n        background-repeat: no-repeat;\n        background-size: cover;\n\n        /*\n        background: -webkit-linear-gradient(55deg,\n        #009785 0%,\n        #245aa5 50%,\n        #b800e9 100%);\n        */\n    }\n\n\n    /* 頂部條 */\n    body.nr-dashboard-theme md-toolbar{\n        background-color: transparent !important; //背景變透明\n        color: #FFFFFF !important; //字體變白\n    }\n\n    /* 左側菜單（側邊欄） */\n    body.nr-dashboard-theme md-sidenav {\n        color: white !important;\n        background-color: rgba(0, 0, 0, 0) !important;\n    }\n\n    /* 懸停選擇 */\n    a.md-no-style,\n    button.md-no-style {\n        border-radius: 10px !important;\n    }\n\n    /* 已選菜單項目 */\n    .nr-menu-item-active div button {\n        border-right: 4px solid rgb(41 98 255) !important;\n    }\n\n    /* 列表項目 */\n    body.nr-dashboard-theme md-sidenav div.md-list-item-inner {\n        color: white !important;\n        background-color: rgba(40, 85, 165, 1) !important;\n        border-radius: 10px !important;\n    }\n\n    body.nr-dashboard-theme md-content md-card {\n    background-color: #33333300;\n    color: #ffffff;\n    text-shadow: 4px 2px 4px #00000045;\n    box-shadow: 0 -1px 5px 1px #00000045;\n    border-radius: 12px;\n    border: 1px solid var(--color-widget-border);\n    }\n\n    #Control_Panel_System {\n    background: transparent;\n    border: transparent;\n    }\n    \n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 610,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b33664706ba0eca",
+        "type": "ui_text",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "group": "98841551674525d1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "魚缸狀態",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "x": 960,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "17c5b46d37b87ffb",
+        "type": "ui_button",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "",
+        "group": "f0a5894104d4baed",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "餵食器",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "r",
+        "payloadType": "str",
+        "topic": "stonez56/esp32s",
+        "topicType": "msg",
+        "x": 470,
+        "y": 1100,
+        "wires": [
+            [
+                "9dc2d74f3b4d589d",
+                "4e17b5546c03c11e"
+            ]
+        ]
+    },
+    {
+        "id": "46ee6d1c5cf16317",
+        "type": "mqtt in",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "",
+        "topic": "stonez56/esp32s",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "1daee71073470922",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 1100,
+        "wires": [
+            [
+                "17c5b46d37b87ffb"
+            ]
+        ]
+    },
+    {
+        "id": "235d2fb8e31e4f2a",
+        "type": "inject",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT * FROM fishtank ORDER BY ID DESC LIMIT 7;",
+        "payload": "",
+        "payloadType": "date",
+        "x": 620,
+        "y": 1180,
+        "wires": [
+            [
+                "b47af69ddc10838f"
+            ]
+        ]
+    },
+    {
+        "id": "9dc2d74f3b4d589d",
+        "type": "mqtt out",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "",
+        "topic": "stonez56/esp32s",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "1daee71073470922",
+        "x": 710,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "8087b436223f36d4",
+        "type": "ui_table",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "group": "9c3efec766d2eabf",
+        "name": "",
+        "order": 3,
+        "width": 9,
+        "height": 4,
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1010,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "b47af69ddc10838f",
+        "type": "mysql",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "mydb": "7aa96d8459aa1c49",
+        "name": "",
+        "x": 830,
+        "y": 1180,
+        "wires": [
+            [
+                "8087b436223f36d4"
+            ]
+        ]
+    },
+    {
+        "id": "c02b2a69b591355f",
+        "type": "http request",
+        "z": "113458a4ccbe69b6",
+        "name": "Messaging API 傳送",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.line.me/v2/bot/message/push",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1060,
+        "y": 600,
+        "wires": [
+            [
+                "f6503793794cfbc5"
+            ]
+        ]
+    },
+    {
+        "id": "f6503793794cfbc5",
+        "type": "debug",
+        "z": "113458a4ccbe69b6",
+        "name": "debug 62",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1280,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "1599b9febe02a514",
+        "type": "function",
+        "z": "113458a4ccbe69b6",
+        "name": "function 19",
+        "func": "// 獲取pH值\nvar TEMP_value = global.get(\"temp_value\");\n\n// 使用正則表達式清理TEMP_value，只保留數字和一個小數點\nvar cleaned_TEMP_value = TEMP_value.replace(/[^\\d.]/g, '');\n\n// 轉換PH值為文字\nvar TEMP_text = cleaned_TEMP_value.toString();\n\n// 將文字化的PH值用於Node-RED中的後續邏輯（例如switch節點）\nmsg.payload = TEMP_text;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 600,
+        "wires": [
+            [
+                "f0d1fde032993166"
+            ]
+        ]
+    },
+    {
+        "id": "f0d1fde032993166",
+        "type": "switch",
+        "z": "113458a4ccbe69b6",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "25",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 650,
+        "y": 600,
+        "wires": [
+            [
+                "9dd5e6889836cc4c"
+            ]
+        ]
+    },
+    {
+        "id": "9dd5e6889836cc4c",
+        "type": "function",
+        "z": "113458a4ccbe69b6",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'xB6d8P9HrHWfdzEf/jDBDlJz7crypRGE4aKi8j5C+bMrmNaGtfjzVQv+oglSyMW8vlD4O7DiVFF4XB5Mpz5EgoIyuYjCKYEikQ+k8kdKkdFWq+4rx1nwTda0vAv1ybEYzlPwHm1Sv22rsNkwgpWHXAdB04t89/1O/w1cDnyilFU=';\nvar USER_ID = 'Uee1b61f84d0edff98093a380d3437c8b';\nvar USER_ID_2 = 'U1c9f961591b68aa4b8cbf178a7651b36';\nvar USER_ID_3 = 'Ua758b97f4ac9475ffef57b0ab5f8c3f1';\n\n\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUsers = [USER_ID, USER_ID_2, USER_ID_3];\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"目前為\" + TEMP_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUsers[2], // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 600,
+        "wires": [
+            [
+                "c02b2a69b591355f"
+            ]
+        ]
+    },
+    {
+        "id": "253e18fa7e021824",
+        "type": "inject",
+        "z": "113458a4ccbe69b6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 620,
+        "wires": [
+            [
+                "1599b9febe02a514"
+            ]
+        ]
+    },
+    {
+        "id": "4e17b5546c03c11e",
+        "type": "debug",
+        "z": "113458a4ccbe69b6",
+        "g": "7264f32fef0b0aab",
+        "name": "debug 63",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "c291948566fe214a",
+        "type": "debug",
+        "z": "113458a4ccbe69b6",
+        "name": "debug 64",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "69863adef137c586",
+        "type": "http request",
+        "z": "113458a4ccbe69b6",
+        "g": "6f4230a8f79445f1",
+        "name": "Messaging API 傳送",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.line.me/v2/bot/message/push",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1780,
+        "y": 800,
+        "wires": [
+            [
+                "91b22aab4907e14e"
+            ]
+        ]
+    },
+    {
+        "id": "c78e0e79c314f026",
+        "type": "inject",
+        "z": "113458a4ccbe69b6",
+        "g": "6f4230a8f79445f1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 12 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1240,
+        "y": 800,
+        "wires": [
+            [
+                "10e9b2eb39128c5b",
+                "a8c03416566078cb",
+                "e3a8477dde1dc032"
+            ]
+        ]
+    },
+    {
+        "id": "10e9b2eb39128c5b",
+        "type": "function",
+        "z": "113458a4ccbe69b6",
+        "g": "6f4230a8f79445f1",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'ztKoWXBadiOIASyV14A5CApiPNcNxEgfA5DNCHhHnpJs4fT+QRxaemFHmIkkYR2il9cyVsdifgCH4PrhvT8gGtLB2aAahms8PO82s8iLSaoyP1NdsLaZ/MDJB5W3dl1VjNfEWYv9ZS3cpsmclI7ySQdB04t89/1O/w1cDnyilFU=';\nvar USER_ID = 'Ueaf967b7ccd85e3a3d832708c25868bb';\n\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUsers = [USER_ID];\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\nmessages.push({ type: 'text', text: \"目前pH值為\" + PH_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUsers[0], // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1500,
+        "y": 740,
+        "wires": [
+            [
+                "69863adef137c586"
+            ]
+        ]
+    },
+    {
+        "id": "91b22aab4907e14e",
+        "type": "debug",
+        "z": "113458a4ccbe69b6",
+        "g": "6f4230a8f79445f1",
+        "name": "debug 64",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2060,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "a8c03416566078cb",
+        "type": "function",
+        "z": "113458a4ccbe69b6",
+        "g": "6f4230a8f79445f1",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'ztKoWXBadiOIASyV14A5CApiPNcNxEgfA5DNCHhHnpJs4fT+QRxaemFHmIkkYR2il9cyVsdifgCH4PrhvT8gGtLB2aAahms8PO82s8iLSaoyP1NdsLaZ/MDJB5W3dl1VjNfEWYv9ZS3cpsmclI7ySQdB04t89/1O/w1cDnyilFU=';\nvar USER_ID= 'U76b67a9a45512fb85afdb1bd33c5d817';\n\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUser = USER_ID;\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\nmessages.push({ type: 'text', text: \"目前pH值為\" + PH_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUser, // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1480,
+        "y": 800,
+        "wires": [
+            [
+                "69863adef137c586"
+            ]
+        ]
+    },
+    {
+        "id": "e3a8477dde1dc032",
+        "type": "function",
+        "z": "113458a4ccbe69b6",
+        "g": "6f4230a8f79445f1",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'ztKoWXBadiOIASyV14A5CApiPNcNxEgfA5DNCHhHnpJs4fT+QRxaemFHmIkkYR2il9cyVsdifgCH4PrhvT8gGtLB2aAahms8PO82s8iLSaoyP1NdsLaZ/MDJB5W3dl1VjNfEWYv9ZS3cpsmclI7ySQdB04t89/1O/w1cDnyilFU=';\nvar USER_ID = ''\n\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUsers = USER_ID;\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\nmessages.push({ type: 'text', text: \"目前pH值為\" + PH_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUsers, // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1480,
+        "y": 860,
+        "wires": [
+            [
+                "69863adef137c586"
+            ]
+        ]
+    },
+    {
+        "id": "6687ce6a480d4b3c",
+        "type": "ui_button",
+        "z": "113458a4ccbe69b6",
+        "g": "6f4230a8f79445f1",
+        "name": "",
+        "group": "f0a5894104d4baed",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "LINE",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1230,
+        "y": 860,
+        "wires": [
+            [
+                "10e9b2eb39128c5b",
+                "a8c03416566078cb",
+                "e3a8477dde1dc032"
+            ]
+        ]
+    },
+    {
+        "id": "7aa96d8459aa1c49",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "test",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "89975cb5ce9f40f8",
+        "type": "mqtt-broker",
+        "name": "MQTTlens",
+        "broker": "broker.emqx.io",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "98841551674525d1",
+        "type": "ui_group",
+        "name": "魚缸狀態",
+        "tab": "28ab27576dccbcba",
+        "order": 1,
+        "disp": false,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9c3efec766d2eabf",
+        "type": "ui_group",
+        "name": "監測記錄",
+        "tab": "28ab27576dccbcba",
+        "order": 2,
+        "disp": true,
+        "width": 9,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0524f72773cfa0a4",
+        "type": "ui_group",
+        "name": "hidden_group",
+        "tab": "4937183174d7bfcf",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f0a5894104d4baed",
+        "type": "ui_group",
+        "name": "開關",
+        "tab": "28ab27576dccbcba",
+        "order": 3,
+        "disp": true,
+        "width": "4",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1daee71073470922",
+        "type": "mqtt-broker",
+        "name": "20230502 _ MQTT",
+        "broker": "broker.emqx.io",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "28ab27576dccbcba",
+        "type": "ui_tab",
+        "name": "智慧生態缸",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "4937183174d7bfcf",
+        "type": "ui_tab",
+        "name": "Zooland Sys",
+        "icon": "home",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

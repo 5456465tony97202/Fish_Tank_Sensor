@@ -1,0 +1,455 @@
+[
+    {
+        "id": "c473f162f1d37e05",
+        "type": "tab",
+        "label": "流程12",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "552beaa7209ae9f4",
+        "type": "group",
+        "z": "c473f162f1d37e05",
+        "name": "linebot 1003測試",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "98a493190e56e186",
+            "bca266c06fe4d0b9",
+            "95293952657132cc"
+        ],
+        "x": 68,
+        "y": 1253,
+        "w": 1164,
+        "h": 814
+    },
+    {
+        "id": "98a493190e56e186",
+        "type": "group",
+        "z": "c473f162f1d37e05",
+        "g": "552beaa7209ae9f4",
+        "name": "溫度閥值",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "c4a317d7b4896352",
+            "64c45faad1c5efbd",
+            "da5aeb2409649cde",
+            "32d283c38a2c61f2",
+            "ec787839b0625ee2",
+            "bcb9229f35dddc39",
+            "a0bbcb1141683ef9"
+        ],
+        "x": 94,
+        "y": 1839,
+        "w": 1112,
+        "h": 202
+    },
+    {
+        "id": "bca266c06fe4d0b9",
+        "type": "group",
+        "z": "c473f162f1d37e05",
+        "g": "552beaa7209ae9f4",
+        "name": "按鈕傳送",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "10fcc32f3e50c95c",
+            "5953d209671feffe",
+            "ea273d9a8e9e5d3f",
+            "8d52115a7c9d1adf",
+            "0aeed186115ac5c2"
+        ],
+        "x": 194,
+        "y": 1279,
+        "w": 772,
+        "h": 202
+    },
+    {
+        "id": "95293952657132cc",
+        "type": "group",
+        "z": "c473f162f1d37e05",
+        "g": "552beaa7209ae9f4",
+        "name": "自動回復",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "f95958aa49f2f249",
+            "f47fb4256e2fe14b",
+            "cf8018e40149254b",
+            "6183072d183050ef"
+        ],
+        "x": 214,
+        "y": 1579,
+        "w": 632,
+        "h": 242
+    },
+    {
+        "id": "c4a317d7b4896352",
+        "type": "http request",
+        "z": "c473f162f1d37e05",
+        "g": "98a493190e56e186",
+        "name": "Messaging API 傳送",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.line.me/v2/bot/message/push",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1080,
+        "y": 1940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "64c45faad1c5efbd",
+        "type": "function",
+        "z": "c473f162f1d37e05",
+        "g": "98a493190e56e186",
+        "name": "function 19",
+        "func": "// 獲取pH值\nvar TEMP_value = global.get(\"temp_value\");\n\n// 使用正則表達式清理TEMP_value，只保留數字和一個小數點\nvar cleaned_TEMP_value = TEMP_value.replace(/[^\\d.]/g, '');\n\n// 轉換PH值為文字\nvar TEMP_text = cleaned_TEMP_value.toString();\n\n// 將文字化的PH值用於Node-RED中的後續邏輯（例如switch節點）\nmsg.payload = TEMP_text;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 1960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "da5aeb2409649cde",
+        "type": "switch",
+        "z": "c473f162f1d37e05",
+        "g": "98a493190e56e186",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "28",
+                "vt": "str"
+            },
+            {
+                "t": "lt",
+                "v": "25",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 590,
+        "y": 1960,
+        "wires": [
+            [
+                "32d283c38a2c61f2",
+                "bcb9229f35dddc39",
+                "a0bbcb1141683ef9"
+            ],
+            [
+                "32d283c38a2c61f2",
+                "bcb9229f35dddc39",
+                "a0bbcb1141683ef9"
+            ]
+        ]
+    },
+    {
+        "id": "32d283c38a2c61f2",
+        "type": "function",
+        "z": "c473f162f1d37e05",
+        "g": "98a493190e56e186",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'ztKoWXBadiOIASyV14A5CApiPNcNxEgfA5DNCHhHnpJs4fT+QRxaemFHmIkkYR2il9cyVsdifgCH4PrhvT8gGtLB2aAahms8PO82s8iLSaoyP1NdsLaZ/MDJB5W3dl1VjNfEWYv9ZS3cpsmclI7ySQdB04t89/1O/w1cDnyilFU=';\nvar USER_ID = 'Ueaf967b7ccd85e3a3d832708c25868bb';\nvar USER_ID_2 = 'U1c9f961591b68aa4b8cbf178a7651b36';\nvar USER_ID_3 = 'Ua758b97f4ac9475ffef57b0ab5f8c3f1';\n\n\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUsers = [USER_ID, USER_ID_2, USER_ID_3];\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"溫度過高，目前為\" + TEMP_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUsers[0], // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 1880,
+        "wires": [
+            [
+                "c4a317d7b4896352"
+            ]
+        ]
+    },
+    {
+        "id": "ec787839b0625ee2",
+        "type": "inject",
+        "z": "c473f162f1d37e05",
+        "g": "98a493190e56e186",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 1960,
+        "wires": [
+            [
+                "64c45faad1c5efbd"
+            ]
+        ]
+    },
+    {
+        "id": "bcb9229f35dddc39",
+        "type": "function",
+        "z": "c473f162f1d37e05",
+        "g": "98a493190e56e186",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'ztKoWXBadiOIASyV14A5CApiPNcNxEgfA5DNCHhHnpJs4fT+QRxaemFHmIkkYR2il9cyVsdifgCH4PrhvT8gGtLB2aAahms8PO82s8iLSaoyP1NdsLaZ/MDJB5W3dl1VjNfEWYv9ZS3cpsmclI7ySQdB04t89/1O/w1cDnyilFU=';\nvar USER_ID= 'U76b67a9a45512fb85afdb1bd33c5d817';\n\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUser = USER_ID;\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\nmessages.push({ type: 'text', text: \"目前PH值為\" + PH_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUser, // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 1940,
+        "wires": [
+            [
+                "c4a317d7b4896352"
+            ]
+        ]
+    },
+    {
+        "id": "a0bbcb1141683ef9",
+        "type": "function",
+        "z": "c473f162f1d37e05",
+        "g": "98a493190e56e186",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'ztKoWXBadiOIASyV14A5CApiPNcNxEgfA5DNCHhHnpJs4fT+QRxaemFHmIkkYR2il9cyVsdifgCH4PrhvT8gGtLB2aAahms8PO82s8iLSaoyP1NdsLaZ/MDJB5W3dl1VjNfEWYv9ZS3cpsmclI7ySQdB04t89/1O/w1cDnyilFU=';\nvar USER_ID = ''\n\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUsers = USER_ID;\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\nmessages.push({ type: 'text', text: \"目前PH值為\" + PH_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUsers, // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 2000,
+        "wires": [
+            [
+                "c4a317d7b4896352"
+            ]
+        ]
+    },
+    {
+        "id": "10fcc32f3e50c95c",
+        "type": "http request",
+        "z": "c473f162f1d37e05",
+        "g": "bca266c06fe4d0b9",
+        "name": "Messaging API 傳送",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.line.me/v2/bot/message/push",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 840,
+        "y": 1380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5953d209671feffe",
+        "type": "inject",
+        "z": "c473f162f1d37e05",
+        "g": "bca266c06fe4d0b9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 12 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 1380,
+        "wires": [
+            [
+                "ea273d9a8e9e5d3f",
+                "8d52115a7c9d1adf",
+                "0aeed186115ac5c2"
+            ]
+        ]
+    },
+    {
+        "id": "ea273d9a8e9e5d3f",
+        "type": "function",
+        "z": "c473f162f1d37e05",
+        "g": "bca266c06fe4d0b9",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'ztKoWXBadiOIASyV14A5CApiPNcNxEgfA5DNCHhHnpJs4fT+QRxaemFHmIkkYR2il9cyVsdifgCH4PrhvT8gGtLB2aAahms8PO82s8iLSaoyP1NdsLaZ/MDJB5W3dl1VjNfEWYv9ZS3cpsmclI7ySQdB04t89/1O/w1cDnyilFU=';\nvar USER_ID = 'Ueaf967b7ccd85e3a3d832708c25868bb';\n\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUsers = [USER_ID];\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\nmessages.push({ type: 'text', text: \"目前PH值為\" + PH_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUsers[0], // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1320,
+        "wires": [
+            [
+                "10fcc32f3e50c95c"
+            ]
+        ]
+    },
+    {
+        "id": "8d52115a7c9d1adf",
+        "type": "function",
+        "z": "c473f162f1d37e05",
+        "g": "bca266c06fe4d0b9",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'ztKoWXBadiOIASyV14A5CApiPNcNxEgfA5DNCHhHnpJs4fT+QRxaemFHmIkkYR2il9cyVsdifgCH4PrhvT8gGtLB2aAahms8PO82s8iLSaoyP1NdsLaZ/MDJB5W3dl1VjNfEWYv9ZS3cpsmclI7ySQdB04t89/1O/w1cDnyilFU=';\nvar USER_ID= 'U76b67a9a45512fb85afdb1bd33c5d817';\n\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUser = USER_ID;\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\nmessages.push({ type: 'text', text: \"目前PH值為\" + PH_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUser, // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 1380,
+        "wires": [
+            [
+                "10fcc32f3e50c95c"
+            ]
+        ]
+    },
+    {
+        "id": "0aeed186115ac5c2",
+        "type": "function",
+        "z": "c473f162f1d37e05",
+        "g": "bca266c06fe4d0b9",
+        "name": "傳送信息",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'ztKoWXBadiOIASyV14A5CApiPNcNxEgfA5DNCHhHnpJs4fT+QRxaemFHmIkkYR2il9cyVsdifgCH4PrhvT8gGtLB2aAahms8PO82s8iLSaoyP1NdsLaZ/MDJB5W3dl1VjNfEWYv9ZS3cpsmclI7ySQdB04t89/1O/w1cDnyilFU=';\nvar USER_ID = ''\n\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUsers = USER_ID;\nvar messages = [];\n\n// Add up to 5 message objects to the messages array\nmessages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\nmessages.push({ type: 'text', text: \"目前PH值為\" + PH_value });\n\n// Send messages to the target users\nvar payload = {\n    to: targetUsers, // You can choose the target user from the array\n    messages: messages.slice(0, 5) // Limit to a maximum of 5 messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 1440,
+        "wires": [
+            [
+                "10fcc32f3e50c95c"
+            ]
+        ]
+    },
+    {
+        "id": "f95958aa49f2f249",
+        "type": "http in",
+        "z": "c473f162f1d37e05",
+        "g": "95293952657132cc",
+        "name": "智慧生態缸  接收訊息",
+        "url": "line_hook2",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 330,
+        "y": 1620,
+        "wires": [
+            [
+                "cf8018e40149254b",
+                "6183072d183050ef"
+            ]
+        ]
+    },
+    {
+        "id": "f47fb4256e2fe14b",
+        "type": "http request",
+        "z": "c473f162f1d37e05",
+        "g": "95293952657132cc",
+        "name": "智慧生態缸   回復訊息",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.line.me/v2/bot/message/push",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 660,
+        "y": 1780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cf8018e40149254b",
+        "type": "function",
+        "z": "c473f162f1d37e05",
+        "g": "95293952657132cc",
+        "name": "多人訊息傳送",
+        "func": "var CHANNEL_ACCESS_TOKEN = 'ztKoWXBadiOIASyV14A5CApiPNcNxEgfA5DNCHhHnpJs4fT+QRxaemFHmIkkYR2il9cyVsdifgCH4PrhvT8gGtLB2aAahms8PO82s8iLSaoyP1NdsLaZ/MDJB5W3dl1VjNfEWYv9ZS3cpsmclI7ySQdB04t89/1O/w1cDnyilFU=';\nvar USER_ID = 'Ueaf967b7ccd85e3a3d832708c25868bb';\nvar USER_ID_2 = 'U9d11f08d066b18209152da77c71130b9';\nvar USER_ID_3 = 'Ua758b97f4ac9475ffef57b0ab5f8c3f1';\nvar receive_msg = msg.payload;\nvar PH_value = global.get(\"pH_value\");\nvar TEMP_value = global.get(\"temp_value\");\n\nvar headers = {\n    'Content-Type': 'application/json; charset=UTF-8',\n    'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN\n};\n\nvar targetUser = receive_msg.events[0].source.userId;\nvar messages = [];\n\nif (targetUser === USER_ID) {\n    // 處理USER_ID的消息\n    if (receive_msg.events[0].message.type == \"text\") {\n        if (receive_msg.events[0].message.text == \"魚缸溫度\") {\n            messages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\n        } else if (receive_msg.events[0].message.text == \"PH值\") {\n            messages.push({ type: 'text', text: \"目前PH值為\" + PH_value });\n        } else {\n            messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」「PH值」\" });\n        }\n    } else if (receive_msg.events[0].message.type == \"sticker\") {\n        messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」「PH值」\" });\n    }\n}\n\nif (targetUser === USER_ID_2) {\n    if (receive_msg.events[0].message.type == \"text\") {\n        if (receive_msg.events[0].message.text == \"魚缸溫度\") {\n            messages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\n        } else if (receive_msg.events[0].message.text == \"PH值\") {\n            messages.push({ type: 'text', text: \"目前PH值為\" + PH_value });\n        } else {\n            messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」或「PH值」\" });\n        }\n    } else if (receive_msg.events[0].message.type == \"sticker\") {\n        messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」或「PH值」\" });\n    }\n}\n\nif (targetUser === USER_ID_3) {\n    if (receive_msg.events[0].message.type == \"text\") {\n        if (receive_msg.events[0].message.text == \"魚缸溫度\") {\n            messages.push({ type: 'text', text: \"目前魚缸溫度為\" + TEMP_value });\n        } else if (receive_msg.events[0].message.text == \"PH值\") {\n            messages.push({ type: 'text', text: \"目前PH值為\" + PH_value });\n        } else {\n            messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」或「PH值」\" });\n        }\n    } else if (receive_msg.events[0].message.type == \"sticker\") {\n        messages.push({ type: 'text', text: \"請輸入關鍵字:「魚缸溫度」或「PH值」\" });\n    }\n}\n\n// 发送消息给目标用户\nvar payload = {\n    to: targetUser,\n    messages: messages\n};\n\nmsg.headers = headers;\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 1700,
+        "wires": [
+            [
+                "f47fb4256e2fe14b"
+            ]
+        ]
+    },
+    {
+        "id": "6183072d183050ef",
+        "type": "debug",
+        "z": "c473f162f1d37e05",
+        "g": "95293952657132cc",
+        "name": "debug 65",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 1620,
+        "wires": []
+    }
+]
